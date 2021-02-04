@@ -22,9 +22,44 @@ public class AsyncApplication implements Runnable {
 	private String clientName = "Tester-Async";
 
 	public static void main(String[] args) {
-		AsyncApplication app = new AsyncApplication();
+		AsyncApplication app = new AsyncApplication(args);
 
 		app.run();
+	}
+	
+	public AsyncApplication(String[] args) {
+		if(args.length > 0) {
+			for(int i=0;i<args.length;i++) {
+				String arg = args[i];
+				if(arg.startsWith("-host")) {
+					int index = arg.indexOf('=');
+					if(index > -1) {
+						String host = arg.substring(index+1);
+						hivehost = host;
+					}
+				}
+				if(arg.startsWith("-duration")) {
+					int index = arg.indexOf('=');
+					if(index > -1) {
+						String durStr = arg.substring(index+1);
+						if(!durStr.isEmpty()) {
+							try {
+								duration = Long.parseLong(durStr);
+							} catch(NumberFormatException e) {
+								System.out.println("Unable to parse number of messages from "+durStr);
+							}
+						}
+					}
+				}
+				if(arg.startsWith("-clientName")) {
+					int index = arg.indexOf('=');
+					if(index > -1) {
+						String cName = arg.substring(index+1);
+						clientName = cName;
+					}
+				}
+			}
+		}
 	}
 
 	public void run() {
