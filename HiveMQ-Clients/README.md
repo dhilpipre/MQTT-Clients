@@ -2,6 +2,11 @@
 
 ## Build
 mvn clean package
+
+## Running with New Relic Java Agent
+   
+To run these clients with the Java Agent, set the environment variable MAVEN_OPTS with the java agent string
+export MAVEN_OPTS="-javaagent:path-to-newrelic.jar"
    
 ## Clients
    
